@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -174,18 +173,18 @@ const Exploration = () => {
 // Community Hub Component
 const CommunityHub = ({ onClose }: { onClose: () => void }) => {
   const players = [
-    { id: 1, name: "Arjun", avatar: "/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png", level: 12, points: 1240, badge: "Kerala Expert" },
-    { id: 2, name: "Meera", avatar: "/lovable-uploads/7ea599b5-bfde-462e-b7e7-454b0a50f062.png", level: 9, points: 920, badge: "Culture Enthusiast" },
-    { id: 3, name: "Rahul", avatar: "/lovable-uploads/371255ec-eeef-4782-8d23-8b28ebdf92b8.png", level: 14, points: 1380, badge: "Master Explorer" },
-    { id: 4, name: "Lakshmi", avatar: "/lovable-uploads/9f8e05b4-7eaf-44a7-86fe-e150958b3278.png", level: 7, points: 760, badge: "Backwater Navigator" },
+    { id: 1, name: "Arjun", avatar: "/assets/placeholder.png", level: 12, points: 1240, badge: "Kerala Expert" },
+    { id: 2, name: "Meera", avatar: "/assets/placeholder.png", level: 9, points: 920, badge: "Culture Enthusiast" },
+    { id: 3, name: "Rahul", avatar: "/assets/placeholder.png", level: 14, points: 1380, badge: "Master Explorer" },
+    { id: 4, name: "Lakshmi", avatar: "/assets/placeholder.png", level: 7, points: 760, badge: "Backwater Navigator" },
   ];
 
   const [currentTab, setCurrentTab] = useState<'leaderboard' | 'chat' | 'games'>('leaderboard');
   const [chatInput, setChatInput] = useState('');
   const [chats, setChats] = useState([
-    { id: 1, user: "Arjun", message: "Has anyone visited the Kathakali Center in Fort Kochi?", time: "10:45 AM", avatar: "/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png" },
-    { id: 2, user: "Meera", message: "Yes! It's amazing. The performances start at 6 PM usually.", time: "10:47 AM", avatar: "/lovable-uploads/7ea599b5-bfde-462e-b7e7-454b0a50f062.png" },
-    { id: 3, user: "Rahul", message: "I recommend trying the sadya at Paragon Restaurant if you're in Kochi.", time: "10:52 AM", avatar: "/lovable-uploads/371255ec-eeef-4782-8d23-8b28ebdf92b8.png" },
+    { id: 1, user: "Arjun", message: "Has anyone visited the Kathakali Center in Fort Kochi?", time: "10:45 AM", avatar: "/assets/placeholder.png" },
+    { id: 2, user: "Meera", message: "Yes! It's amazing. The performances start at 6 PM usually.", time: "10:47 AM", avatar: "/assets/placeholder.png" },
+    { id: 3, user: "Rahul", message: "I recommend trying the sadya at Paragon Restaurant if you're in Kochi.", time: "10:52 AM", avatar: "/assets/placeholder.png" },
   ]);
 
   const handleChatSubmit = (e: React.FormEvent) => {
@@ -196,7 +195,7 @@ const CommunityHub = ({ onClose }: { onClose: () => void }) => {
         user: "You",
         message: chatInput,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        avatar: "/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png"
+        avatar: "/assets/placeholder.png"
       }]);
       setChatInput('');
     }
@@ -329,7 +328,7 @@ const CommunityHub = ({ onClose }: { onClose: () => void }) => {
               className="bg-gradient-to-r from-teal-900/40 to-slate-800/60 border border-teal-500/30 rounded-lg overflow-hidden"
             >
               <div className="h-40 relative">
-                <img src="/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png" alt="Kerala Backwaters" className="w-full h-full object-cover opacity-80" />
+                <img src="/assets/placeholder.png" alt="Kerala Backwaters" className="w-full h-full object-cover opacity-80" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
                 <h4 className="absolute bottom-3 left-3 text-xl font-bold text-white">Backwater Race</h4>
               </div>
@@ -360,7 +359,7 @@ const CommunityHub = ({ onClose }: { onClose: () => void }) => {
               className="bg-gradient-to-r from-amber-900/40 to-slate-800/60 border border-amber-500/30 rounded-lg overflow-hidden"
             >
               <div className="h-40 relative">
-                <img src="/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png" alt="Kerala Cuisine" className="w-full h-full object-cover opacity-80" />
+                <img src="/assets/placeholder.png" alt="Kerala Cuisine" className="w-full h-full object-cover opacity-80" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
                 <h4 className="absolute bottom-3 left-3 text-xl font-bold text-white">Kerala Cuisine Quiz</h4>
               </div>
@@ -391,7 +390,7 @@ const CommunityHub = ({ onClose }: { onClose: () => void }) => {
               className="bg-gradient-to-r from-purple-900/40 to-slate-800/60 border border-purple-500/30 rounded-lg overflow-hidden"
             >
               <div className="h-40 relative">
-                <img src="/lovable-uploads/91bf8199-59a4-4e3e-96c1-10cd41b289f1.png" alt="Kathakali" className="w-full h-full object-cover opacity-80" />
+                <img src="/assets/placeholder.png" alt="Kathakali" className="w-full h-full object-cover opacity-80" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
                 <h4 className="absolute bottom-3 left-3 text-xl font-bold text-white">Kathakali Dance-Off</h4>
               </div>
@@ -413,7 +412,7 @@ const CommunityHub = ({ onClose }: { onClose: () => void }) => {
               className="bg-gradient-to-r from-blue-900/40 to-slate-800/60 border border-blue-500/30 rounded-lg overflow-hidden"
             >
               <div className="h-40 relative">
-                <img src="/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png" alt="Tea Plantation" className="w-full h-full object-cover opacity-80" />
+                <img src="/assets/placeholder.png" alt="Tea Plantation" className="w-full h-full object-cover opacity-80" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
                 <h4 className="absolute bottom-3 left-3 text-xl font-bold text-white">Munnar Tea Challenge</h4>
               </div>

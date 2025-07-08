@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import NavigationBar from "./NavigationBar";
 import { ReactNode } from "react";
@@ -12,7 +11,7 @@ type PageLayoutProps = {
 
 const PageLayout = ({ children, fullWidth = false, mapBackground = false }: PageLayoutProps) => {
   return (
-    <div className={`min-h-screen ${mapBackground ? 'bg-slate-900' : 'bg-[url(\'/lovable-uploads/c33d1835-34b1-4ffe-9332-68c37b3b2c00.png\')] bg-cover bg-fixed'}`}>
+    <div className={`min-h-screen ${mapBackground ? 'bg-slate-900' : 'bg-[url(\'/assets/placeholder.png\')] bg-cover bg-fixed'}`}>
       <div className={`absolute inset-0 ${mapBackground ? 'bg-gradient-to-b from-slate-900/70 to-slate-800/90' : 'bg-gradient-to-b from-slate-900/80 to-slate-800/90 backdrop-blur-sm'}`}></div>
       <NavigationBar />
       

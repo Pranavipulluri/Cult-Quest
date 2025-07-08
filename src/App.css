@@ -1,4 +1,3 @@
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -138,7 +137,7 @@ body {
 
 .hero-section {
   position: relative;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('/lovable-uploads/c33d1835-34b1-4ffe-9332-68c37b3b2c00.png');
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('/assets/placeholder.png');
   background-size: cover;
   background-position: center;
   border-radius: 0 0 30px 30px;

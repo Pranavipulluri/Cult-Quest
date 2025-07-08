@@ -43,16 +43,16 @@ import {
 
 // Import custom colored map images
 const regionMapImages = {
-  asia: "/lovable-uploads/30e5b83a-25ac-43e1-90d3-80a21f1a319e.png",
-  europe: "/lovable-uploads/cbe5bfa0-e4c5-49b1-a687-8151662d21ea.png",
-  africa: "/lovable-uploads/69fb4eb9-b78c-4c43-9918-c5aed7be4bcc.png",
-  americas: "/lovable-uploads/fb03e8d4-7a19-44d4-9fc3-9dd04a6476f8.png",
-  oceania: "/lovable-uploads/ca30d5b2-84a6-4e29-94f7-6ba0499996c1.png",
-  india: "/lovable-uploads/81342f88-cc2b-47e3-867e-b10f1e059c2c.png",
+  asia: "/assets/placeholder.png",
+  europe: "/assets/placeholder.png",
+  africa: "/assets/placeholder.png",
+  americas: "/assets/placeholder.png",
+  oceania: "/assets/placeholder.png",
+  india: "/assets/placeholder.png",
   // Use pixelated custom map images provided by the user
-  custom_kerala: "/lovable-uploads/1f104cbb-67b3-4754-a071-d0c178ce0177.png",
-  custom_world: "/lovable-uploads/967ab145-1ae8-4e98-9e6a-b690373881f1.png",
-  custom_fantasy: "/lovable-uploads/141a3eed-d5dc-4e0d-933d-b9dcf29c3f90.png"
+  custom_kerala: "/assets/placeholder.png",
+  custom_world: "/assets/placeholder.png",
+  custom_fantasy: "/assets/placeholder.png"
 };
 
 export type RegionData = {
@@ -153,21 +153,21 @@ const regionData: Record<string, RegionData> = {
                 name: "Onam Festival",
                 description: "The harvest festival of Kerala featuring boat races, floral decorations (pookalam), feasts (Onasadya), and folk dances. Onam commemorates the return of King Mahabali, and is celebrated with great enthusiasm across Kerala.",
                 date: "August-September (varies yearly)",
-                image: "/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "vishu",
                 name: "Vishu",
                 description: "The Kerala New Year celebration featuring Vishukkani (first sight arrangements), giving of money (Vishukaineetam), and a feast. Families arrange a ritualistic display of auspicious items to be viewed first thing in the morning.",
                 date: "April 14/15",
-                image: "/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "thrissur-pooram",
                 name: "Thrissur Pooram",
                 description: "A spectacular temple festival featuring caparisoned elephants, traditional music, and an umbrella display competition. It's considered the mother of all temple festivals in Kerala.",
                 date: "April-May",
-                image: "/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+                image: "/assets/placeholder.png"
               }
             ],
             artForms: [
@@ -175,19 +175,19 @@ const regionData: Record<string, RegionData> = {
                 id: "kathakali",
                 name: "Kathakali",
                 description: "A highly stylized classical Indian dance-drama noted for the attractive make-up of characters, elaborate costumes, detailed gestures and well-defined body movements presented in tune with the anchor playback music and complementary percussion.",
-                image: "/lovable-uploads/91bf8199-59a4-4e3e-96c1-10cd41b289f1.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "mohiniyattam",
                 name: "Mohiniyattam",
                 description: "A classical dance form of Kerala, known for its elegant and graceful movements that closely follow the circular path and swaying of the body, emulating the swaying of palm trees.",
-                image: "/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "theyyam",
                 name: "Theyyam",
                 description: "A ritual form of worship where performers take on the spirit of gods and ancestors. The elaborate costumes and dramatic makeup transform the artist into the deity being portrayed.",
-                image: "/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png"
+                image: "/assets/placeholder.png"
               }
             ],
             cuisine: [
@@ -196,21 +196,21 @@ const regionData: Record<string, RegionData> = {
                 name: "Kerala Sadya",
                 description: "A traditional feast served on a banana leaf with a variety of vegetarian dishes. It's an elaborate meal served during special occasions and festivals.",
                 ingredients: ["Rice", "Sambar", "Avial", "Thoran", "Olan", "Pachadi", "Payasam"],
-                image: "/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "appam-stew",
                 name: "Appam with Stew",
                 description: "Lacy, soft hoppers made from fermented rice batter and coconut milk, served with a mildly spiced coconut milk stew made with vegetables or meat.",
                 ingredients: ["Rice flour", "Coconut milk", "Vegetables/Meat", "Spices"],
-                image: "/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "malabar-biryani",
                 name: "Malabar Biryani",
                 description: "A fragrant rice dish made with aromatic spices, meat, and a unique Kerala touch of cashews and raisins.",
                 ingredients: ["Basmati rice", "Meat", "Spices", "Cashews", "Raisins"],
-                image: "/lovable-uploads/91bf8199-59a4-4e3e-96c1-10cd41b289f1.png"
+                image: "/assets/placeholder.png"
               }
             ],
             landmarks: [
@@ -219,21 +219,21 @@ const regionData: Record<string, RegionData> = {
                 name: "Kerala Backwaters",
                 description: "A network of interconnected canals, rivers, lakes, and inlets formed by more than 900 km of waterways. The backwaters are home to unique aquatic life and offer a peaceful escape through houseboat cruises.",
                 location: "Alleppey and Kumarakom",
-                image: "/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "fort-kochi",
                 name: "Fort Kochi",
                 description: "A historic coastal area known for its colonial architecture, Chinese fishing nets, ancient churches, and multicultural heritage from Portuguese, Dutch, and British influences.",
                 location: "Kochi",
-                image: "/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png"
+                image: "/assets/placeholder.png"
               },
               {
                 id: "padmanabhaswamy",
                 name: "Padmanabhaswamy Temple",
                 description: "An ancient temple dedicated to Lord Vishnu. Known for its Dravidian architecture and historical significance, it gained worldwide attention for its vast treasure vaults.",
                 location: "Thiruvananthapuram",
-                image: "/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+                image: "/assets/placeholder.png"
               }
             ]
           },
@@ -842,7 +842,7 @@ const RegionMap = ({
                 </div>
                 <div className="hidden md:flex items-center gap-2">
                   <img 
-                    src="/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png" 
+                    src="/assets/placeholder.png" 
                     alt="Kerala Character" 
                     className="h-32 ml-4" 
                   />
@@ -1102,7 +1102,7 @@ const RegionMap = ({
                     <CardContent className="p-6">
                       <div className="flex flex-col md:flex-row gap-6 items-center">
                         <div className="w-full md:w-1/3 h-48 bg-slate-700 rounded-lg overflow-hidden">
-                          <img src="/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png" alt="Kerala Sadya" className="w-full h-full object-cover" />
+                          <img src="/assets/placeholder.png" alt="Kerala Sadya" className="w-full h-full object-cover" />
                         </div>
                         <div className="w-full md:w-2/3">
                           <Badge className="mb-2 bg-teal-500">Cultural Experience</Badge>
@@ -1143,7 +1143,7 @@ const RegionMap = ({
                     
                     <Card className="overflow-hidden bg-slate-700/50 border border-teal-500/20">
                       <div className="h-40 bg-slate-600 relative">
-                        <img src="/lovable-uploads/91bf8199-59a4-4e3e-96c1-10cd41b289f1.png" alt="Boat Race" className="w-full h-full object-cover" />
+                        <img src="/assets/placeholder.png" alt="Boat Race" className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                         <h4 className="absolute bottom-3 left-3 text-white font-bold text-lg">Nehru Trophy Boat Race</h4>
                       </div>
@@ -1184,7 +1184,7 @@ const RegionMap = ({
                       <Card className="overflow-hidden bg-slate-700/50 border border-teal-500/20">
                         <div className="flex flex-col md:flex-row">
                           <div className="md:w-1/3">
-                            <img src="/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png" alt="Kalaripayattu" className="w-full h-full object-cover" />
+                            <img src="/assets/placeholder.png" alt="Kalaripayattu" className="w-full h-full object-cover" />
                           </div>
                           <div className="md:w-2/3 p-4">
                             <h4 className="text-xl font-bold text-white mb-2">Kalaripayattu</h4>
@@ -1232,7 +1232,7 @@ const RegionMap = ({
                           <h3 className="text-2xl font-bold text-white mb-4">Virtual Sadya Experience</h3>
                           <div className="relative h-[300px] bg-slate-700/50 rounded-xl overflow-hidden">
                             <img 
-                              src="/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png" 
+                              src="/assets/placeholder.png" 
                               alt="Kerala Sadya on banana leaf" 
                               className="w-full h-full object-cover opacity-40" 
                             />
@@ -1271,7 +1271,7 @@ const RegionMap = ({
                       
                       <Card className="overflow-hidden bg-slate-700/50 border border-teal-500/20">
                         <div className="h-40 bg-slate-600 relative">
-                          <img src="/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png" alt="Munnar" className="w-full h-full object-cover" />
+                          <img src="/assets/placeholder.png" alt="Munnar" className="w-full h-full object-cover" />
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                           <h4 className="absolute bottom-3 left-3 text-white font-bold text-lg">Munnar Tea Gardens</h4>
                         </div>

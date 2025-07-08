@@ -529,7 +529,7 @@ const KeralaItinerary = () => {
         {!boatRaceState.started ? (
           <div className="text-center">
             <img
-              src="/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png"
+              src="/assets/placeholder.png"
               alt="Boat Race"
               className="w-full h-32 object-cover rounded-lg mb-4 opacity-70"
             />
@@ -779,7 +779,7 @@ const KeralaItinerary = () => {
               >
                 <div className="relative">
                   <img
-                    src="/lovable-uploads/f55a5bc8-b4e5-446a-9803-84768ce13250.png"
+                    src="/assets/placeholder.png"
                     alt="Village Map"
                     className="w-[1000px] h-[1000px] object-cover pixel-art"
                     style={{ imageRendering: 'pixelated' }}

@@ -1,7 +1,7 @@
 {
-    "name": "cultural-quest-server",
+    "name": "cult-quest-server",
     "version": "1.0.0",
-    "description": "Backend for Cultural Quest Exchangee Platform",
+    "description": "Backend for Cult Quest.",
     "main": "server.js",
     "scripts": {
       "start": "node server.js",
@@ -15,7 +15,7 @@
       "mongodb",
       "socket.io"
     ],
-    "author": "AI Assistant for Pranavipulluri",
+    "author": "Your Name",
     "license": "MIT",
     "dependencies": {
       "bcryptjs": "^2.4.3",

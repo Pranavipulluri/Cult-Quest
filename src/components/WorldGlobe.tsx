@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -49,7 +48,7 @@ const WorldGlobe = () => {
     const textureLoader = new THREE.TextureLoader(loadManager);
     
     // Earth texture map (colorful with land and oceans)
-    const earthTexture = textureLoader.load('/lovable-uploads/f55a5bc8-b4e5-446a-9803-84768ce13250.png');
+    const earthTexture = textureLoader.load('/assets/placeholder.png');
     
     // Bump map for terrain
     const bumpMap = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_bumpmap.jpg');

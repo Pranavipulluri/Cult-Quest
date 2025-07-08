@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Globe, Users, ShoppingBag, GraduationCap, Gamepad, MessageCircle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -22,7 +21,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[url('/lovable-uploads/c33d1835-34b1-4ffe-9332-68c37b3b2c00.png')] bg-cover bg-center bg-fixed">
+    <div className="min-h-screen overflow-x-hidden bg-[url('/assets/placeholder.png')] bg-cover bg-center bg-fixed">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 to-slate-800/80 backdrop-blur-sm"></div>
       <NavigationBar />
       <SoundToggle />
@@ -61,7 +60,7 @@ const Index = () => {
           <img src="https://cdn3d.iconscout.com/3d/premium/thumb/casual-female-hospitality-pose-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--indian-girl-namaste-welcome-welcoming-pack-people-illustrations-4046991.png" alt="Kerala traditional boy character" className="w-full" />
         </div>
         <div className="absolute bottom-0 right-0 md:w-64 w-40 opacity-90 z-10 transform translate-y-1/4">
-          <img src="/lovable-uploads/7ea599b5-bfde-462e-b7e7-454b0a50f062.png" alt="Tour guide character" className="w-full" />
+          <img src="/assets/placeholder.png" alt="Tour guide character" className="w-full" />
         </div>
         
         <motion.div
@@ -144,7 +143,7 @@ const Index = () => {
               description="Visit virtual cultural hubs and immerse yourself in traditions from around the world."
               link="/exploration"
               linkText="Start Exploring"
-              image="/lovable-uploads/ca2d6830-e22c-4607-b372-bf96d604334a.png"
+              image="/assets/placeholder.png"
             />
             <Feature
               icon={<ShoppingBag className="w-10 h-10 text-orange-400" />}
@@ -152,7 +151,7 @@ const Index = () => {
               description="Exchange cultural items and build your collection of artifacts in our global marketplace."
               link="/marketplace"
               linkText="Visit Marketplace"
-              image="/lovable-uploads/42770aa5-b929-4ed2-85e0-aa5a9b17ac5b.png"
+              image="/assets/placeholder.png"
             />
             <Feature
               icon={<GraduationCap className="w-10 h-10 text-orange-400" />}
@@ -160,7 +159,7 @@ const Index = () => {
               description="Gain knowledge about different cultures through interactive experiences and quests."
               link="/mini-games"
               linkText="Play Mini-Games"
-              image="/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+              image="/assets/placeholder.png"
             />
           </div>
           
@@ -171,7 +170,7 @@ const Index = () => {
               description="Meet players from different cultures and forge meaningful friendships across the globe."
               link="/profile"
               linkText="View Profile"
-              image="/lovable-uploads/91bf8199-59a4-4e3e-96c1-10cd41b289f1.png"
+              image="/assets/placeholder.png"
             />
             <Feature
               icon={<MessageCircle className="w-10 h-10 text-orange-400" />}
@@ -179,7 +178,7 @@ const Index = () => {
               description="Communicate with players worldwide through our real-time chat system with translation features."
               link="/chat"
               linkText="Open Chat"
-              image="/lovable-uploads/9429424e-cfd6-422e-b4d8-94d66c62b618.png"
+              image="/assets/placeholder.png"
             />
           </div>
           
