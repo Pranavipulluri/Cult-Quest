@@ -1,96 +1,55 @@
 
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Trophy } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Profile, LeaderboardUser } from "@/types/supabase-extensions";
+import { useAuth } from "@/contexts/AuthContext";
+import { LeaderboardUser, profileService } from "@/services/profileService";
+import { Trophy } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Scoreboard = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [userRank, setUserRank] = useState<LeaderboardUser | null>(null);
-  const { user } = useAuth();
+  const { user, isDemoMode } = useAuth();
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
+      if (isDemoMode) {
+        // Mock leaderboard for demo mode
+        const mockLeaderboard: LeaderboardUser[] = [
+          { id: '1', username: 'CulturalExplorer', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=1', level: 15, xp: 15000, region: 'Global', role: 'user', bio: '', rank: 1 },
+          { id: '2', username: 'WorldTraveler', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=2', level: 12, xp: 12000, region: 'Kerala', role: 'user', bio: '', rank: 2 },
+          { id: '3', username: 'QuestMaster', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=3', level: 10, xp: 10000, region: 'Tamil Nadu', role: 'user', bio: '', rank: 3 },
+          { id: 'demo-user', username: 'Demo User', avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=demouser', level: 1, xp: 0, region: 'Global', role: 'user', bio: '', rank: 42 },
+        ];
+        setLeaderboard(mockLeaderboard.slice(0, 3));
+        setUserRank(mockLeaderboard[3]);
+        setLoading(false);
+        return;
+      }
+
       try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('id, username, avatar, level, xp, bio, created_at, region')
-          .order('xp', { ascending: false })
-          .limit(10);
+        const { leaderboard: data } = await profileService.getLeaderboard();
+        setLeaderboard(data);
 
-        if (error) {
-          console.error("Error fetching leaderboard:", error);
-          return;
-        }
-
-        // Add rank to each user
-        const rankedData = data.map((user, index) => ({
-          ...user,
-          rank: index + 1
-        })) as LeaderboardUser[];
-
-        setLeaderboard(rankedData);
-
-        // Find current user's rank if they're logged in
+        // Find current user's rank
         if (user) {
-          // If user is not in top 10, fetch their rank separately
-          if (!rankedData.some(item => item.id === user.id)) {
-            const { data: userData, error: userError } = await supabase
-              .from('profiles')
-              .select('id, username, avatar, level, xp, bio, created_at, region')
-              .eq('id', user.id)
-              .single();
-
-            if (!userError && userData) {
-              // Count how many users have more XP
-              const { count, error: countError } = await supabase
-                .from('profiles')
-                .select('*', { count: 'exact', head: true })
-                .gt('xp', userData.xp);
-
-              if (!countError) {
-                setUserRank({
-                  ...userData,
-                  rank: (count || 0) + 1
-                } as LeaderboardUser);
-              }
-            }
-          } else {
-            // User is in top 10, get their data from the leaderboard
-            setUserRank(rankedData.find(item => item.id === user.id) || null);
+          const currentUserRank = data.find(item => item.id === user.id);
+          if (currentUserRank) {
+            setUserRank(currentUserRank);
           }
         }
       } catch (error) {
-        console.error("Error in leaderboard fetch:", error);
+        console.error("Error fetching leaderboard:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchLeaderboard();
-
-    // Set up realtime subscription for profile changes
-    const channel = supabase
-      .channel('profiles-changes')
-      .on('postgres_changes', 
-        { event: '*', schema: 'public', table: 'profiles' }, 
-        () => {
-          // Refresh leaderboard data when any profile changes
-          fetchLeaderboard();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user]);
+  }, [user, isDemoMode]);
 
   if (loading) {
     return (

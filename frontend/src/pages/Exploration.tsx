@@ -1,21 +1,43 @@
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import KeralaItinerary from "@/components/KeralaItineraryIsometric";
 import PageLayout from "@/components/PageLayout";
 import RegionMap from "@/components/RegionMap";
-import KeralaItinerary from "@/components/KeralaItinerary";
-import { 
-  Globe, Compass, Calendar, 
-  Map as MapIcon, Info, X,
-  Users
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
+import { profileService } from "@/services/profileService";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+    Calendar,
+    Compass,
+    Globe,
+    Info,
+    Map as MapIcon,
+    MapPin,
+    Users,
+    X
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const Exploration = () => {
+  const [searchParams] = useSearchParams();
+  const country = searchParams.get('country');
+  
   const [activeRegion, setActiveRegion] = useState("asia");
   const [showItinerary, setShowItinerary] = useState(false);
   const [showCommunityHub, setShowCommunityHub] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (country) {
+      setSelectedCountry(country);
+      // Auto-focus on the country's region
+      if (country.toLowerCase() === 'india') {
+        setActiveRegion('asia');
+      }
+    }
+  }, [country]);
   
   return (
     <PageLayout mapBackground>
@@ -90,8 +112,21 @@ const Exploration = () => {
             >
               <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                 <div>
-                  <h1 className="font-playfair text-3xl font-bold text-white mb-2">Cultural Exploration</h1>
-                  <p className="text-gray-300">Discover traditions, festivals, and cultural sites from around the world</p>
+                  <h1 className="font-playfair text-3xl font-bold text-white mb-2">
+                    {selectedCountry ? `Explore ${selectedCountry.charAt(0).toUpperCase() + selectedCountry.slice(1)}` : 'Cultural Exploration'}
+                  </h1>
+                  <p className="text-gray-300">
+                    {selectedCountry 
+                      ? `Discover the rich culture, traditions, and heritage of ${selectedCountry.charAt(0).toUpperCase() + selectedCountry.slice(1)}`
+                      : 'Discover traditions, festivals, and cultural sites from around the world'
+                    }
+                  </p>
+                  {selectedCountry && (
+                    <div className="flex items-center mt-2 text-teal-400">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      <span className="text-sm">You clicked on {selectedCountry.charAt(0).toUpperCase() + selectedCountry.slice(1)} from the globe</span>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex mt-4 md:mt-0 gap-2">
@@ -131,12 +166,68 @@ const Exploration = () => {
                     </div>
                     
                     <div className="p-4">
-                      <RegionMap 
-                        initialRegion={activeRegion} 
-                        onShowItinerary={() => setShowItinerary(true)}
-                        onShowCommunityHub={() => setShowCommunityHub(true)}
-                        colorfulMap={true}
-                      />
+                      {selectedCountry && selectedCountry.toLowerCase() === 'india' ? (
+                        <div className="space-y-4">
+                          {/* India-specific content */}
+                          <div className="bg-gradient-to-r from-orange-900/40 to-green-900/40 p-6 rounded-lg border border-orange-500/30">
+                            <div className="flex items-center mb-4">
+                              <span className="text-4xl mr-3">🇮🇳</span>
+                              <div>
+                                <h3 className="text-2xl font-bold text-white">Welcome to India</h3>
+                                <p className="text-gray-300">Land of diverse cultures, ancient traditions, and vibrant festivals</p>
+                              </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                              <div className="bg-slate-800/60 p-4 rounded-lg">
+                                <h4 className="text-teal-400 font-semibold mb-2">🏛️ Heritage Sites</h4>
+                                <p className="text-gray-300 text-sm">38 UNESCO World Heritage Sites including Taj Mahal, Red Fort, and more</p>
+                              </div>
+                              <div className="bg-slate-800/60 p-4 rounded-lg">
+                                <h4 className="text-teal-400 font-semibold mb-2">🎭 Cultural Diversity</h4>
+                                <p className="text-gray-300 text-sm">28 states, 22 official languages, countless festivals and traditions</p>
+                              </div>
+                              <div className="bg-slate-800/60 p-4 rounded-lg">
+                                <h4 className="text-teal-400 font-semibold mb-2">🍛 Cuisine</h4>
+                                <p className="text-gray-300 text-sm">Rich culinary heritage with regional specialties from every state</p>
+                              </div>
+                            </div>
+                            
+                            <div className="mt-6 flex gap-3">
+                              <Button 
+                                onClick={() => setShowItinerary(true)}
+                                className="bg-orange-600 hover:bg-orange-700"
+                              >
+                                <MapIcon className="h-4 w-4 mr-2" />
+                                Explore Kerala
+                              </Button>
+                              <Button 
+                                onClick={() => setShowCommunityHub(true)}
+                                variant="outline"
+                                className="border-green-500/30 text-green-400 hover:bg-green-500/10"
+                              >
+                                <Users className="h-4 w-4 mr-2" />
+                                Join Community
+                              </Button>
+                            </div>
+                          </div>
+                          
+                          {/* Show the regular map below */}
+                          <RegionMap 
+                            initialRegion={activeRegion} 
+                            onShowItinerary={() => setShowItinerary(true)}
+                            onShowCommunityHub={() => setShowCommunityHub(true)}
+                            colorfulMap={true}
+                          />
+                        </div>
+                      ) : (
+                        <RegionMap 
+                          initialRegion={activeRegion} 
+                          onShowItinerary={() => setShowItinerary(true)}
+                          onShowCommunityHub={() => setShowCommunityHub(true)}
+                          colorfulMap={true}
+                        />
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -173,12 +264,38 @@ const Exploration = () => {
 
 // Community Hub Component
 const CommunityHub = ({ onClose }: { onClose: () => void }) => {
-  const players = [
-    { id: 1, name: "Arjun", avatar: "/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png", level: 12, points: 1240, badge: "Kerala Expert" },
-    { id: 2, name: "Meera", avatar: "/lovable-uploads/7ea599b5-bfde-462e-b7e7-454b0a50f062.png", level: 9, points: 920, badge: "Culture Enthusiast" },
-    { id: 3, name: "Rahul", avatar: "/lovable-uploads/371255ec-eeef-4782-8d23-8b28ebdf92b8.png", level: 14, points: 1380, badge: "Master Explorer" },
-    { id: 4, name: "Lakshmi", avatar: "/lovable-uploads/9f8e05b4-7eaf-44a7-86fe-e150958b3278.png", level: 7, points: 760, badge: "Backwater Navigator" },
-  ];
+  const [players, setPlayers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  
+  useEffect(() => {
+    const fetchRegionalPlayers = async () => {
+      if (!user) return;
+      
+      try {
+        const response = await profileService.getUsersByRegion(user.region || 'Kerala');
+        setPlayers(response.users.map((u: any) => ({
+          id: u.id,
+          name: u.username,
+          avatar: u.avatar,
+          level: u.level,
+          points: u.xp,
+          badge: u.level >= 10 ? 'Kerala Expert' : u.level >= 5 ? 'Explorer' : 'Beginner'
+        })));
+      } catch (error) {
+        console.error('Error fetching players:', error);
+        // Fallback to mock data
+        setPlayers([
+          { id: 1, name: "Arjun", avatar: "/lovable-uploads/d364c15d-f877-40f4-9df2-cad09b0ec8a2.png", level: 12, points: 1240, badge: "Kerala Expert" },
+          { id: 2, name: "Meera", avatar: "/lovable-uploads/7ea599b5-bfde-462e-b7e7-454b0a50f062.png", level: 9, points: 920, badge: "Culture Enthusiast" },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchRegionalPlayers();
+  }, [user]);
 
   const [currentTab, setCurrentTab] = useState<'leaderboard' | 'chat' | 'games'>('leaderboard');
   const [chatInput, setChatInput] = useState('');

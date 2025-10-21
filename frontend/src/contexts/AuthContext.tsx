@@ -1,43 +1,104 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '../integrations/supabase/client'; // Adjusted import
-import { useToast } from '../hooks/use-toast'; // Adjusted import
-import axios from 'axios'; // Import axios for API calls
+import { useToast } from '../hooks/use-toast';
+import { authService, User } from '../services/authService';
 
 type AuthContextProps = {
-  session: Session | null;
   user: User | null;
   loading: boolean;
   signIn: (username: string, password: string) => Promise<void>;
   signUp: (username: string, password: string, region?: string) => Promise<void>;
   signOut: () => Promise<void>;
   isDemoMode: boolean;
-  enterDemoMode: (region?: string) => void; // Ensure this is defined
+  enterDemoMode: (region?: string) => void;
 };
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Existing code for checking demo mode and session
-  }, [isDemoMode]);
+    // Check for demo mode
+    const demoMode = localStorage.getItem('culturalQuestDemoMode') === 'true';
+    if (demoMode) {
+      setIsDemoMode(true);
+      setLoading(false);
+      return;
+    }
+
+    // Verify existing session
+    const verifySession = async () => {
+      try {
+        const { user: verifiedUser } = await authService.verifyAuth();
+        setUser(verifiedUser);
+      } catch (error) {
+        console.log('No active session');
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    verifySession();
+  }, []);
 
   const signIn = async (username: string, password: string) => {
-    // Existing signIn code
+    try {
+      const { user: loggedInUser, message } = await authService.signIn({ username, password });
+      setUser(loggedInUser);
+      
+      toast({
+        title: "Welcome back!",
+        description: message,
+      });
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Failed to sign in. Please check your credentials.';
+      toast({
+        title: "Sign in failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      throw new Error(errorMessage);
+    }
   };
 
   const signUp = async (username: string, password: string, region?: string) => {
-    // Existing signUp code
+    try {
+      const { user: newUser, message } = await authService.signUp({ username, password, region });
+      setUser(newUser);
+      
+      toast({
+        title: "Account created!",
+        description: message,
+      });
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Failed to create account. Please try again.';
+      toast({
+        title: "Sign up failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      throw new Error(errorMessage);
+    }
   };
 
   const signOut = async () => {
-    // Existing signOut code
+    try {
+      await authService.signOut();
+      setUser(null);
+      
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully.",
+      });
+    } catch (error: any) {
+      console.error('Sign out error:', error);
+      // Clear user anyway
+      setUser(null);
+    }
   };
 
   const enterDemoMode = (region?: string) => {
@@ -54,14 +115,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        session,
         user,
         loading,
         signIn,
         signUp,
         signOut,
         isDemoMode,
-        enterDemoMode, // Include the function in the context
+        enterDemoMode,
       }}
     >
       {children}

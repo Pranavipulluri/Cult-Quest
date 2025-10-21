@@ -1,12 +1,11 @@
 
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import type { Profile } from '@/types/supabase-extensions';
+import { User } from '@/services/authService';
+import { profileService, ProfileUpdateData } from '@/services/profileService';
+import { useEffect, useState } from 'react';
 
-// Use type-only export for re-exporting types
-export type { Profile };
+export type Profile = User;
 
 export function useProfile() {
   const { user, isDemoMode } = useAuth();
@@ -34,9 +33,9 @@ export function useProfile() {
           level: 1,
           xp: 0,
           region: demoRegion,
-          created_at: new Date().toISOString(),
           bio: 'This is a demo account exploring CulturalQuest.',
-        } as Profile;
+          role: 'user'
+        };
         
         setProfile(demoProfile);
         setLoading(false);
@@ -44,73 +43,23 @@ export function useProfile() {
       }
       
       try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user!.id)
-          .single();
-          
-        if (error) {
-          console.error('Error fetching profile:', error);
-          // If profile doesn't exist, let's create one
-          if (error.code === 'PGRST116') {
-            // Make sure id is required since it's a primary key
-            const newProfile = {
-              id: user!.id,
-              username: user!.user_metadata?.username || 'User',
-              avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${user!.id}`,
-              level: 1,
-              xp: 0,
-              region: 'Global',
-              bio: ''
-            };
-            
-            const { data: createdProfile, error: createError } = await supabase
-              .from('profiles')
-              .insert(newProfile)
-              .select()
-              .single();
-              
-            if (createError) {
-              console.error('Error creating profile:', createError);
-            } else {
-              setProfile(createdProfile as Profile);
-              setLoading(false);
-              return;
-            }
-          }
-          return;
-        }
-        
-        setProfile(data as Profile);
+        const { profile: fetchedProfile } = await profileService.getProfile();
+        setProfile(fetchedProfile);
       } catch (error) {
-        console.error('Error in profile fetch:', error);
+        console.error('Error fetching profile:', error);
+        // If we have user from auth, use that as fallback
+        if (user) {
+          setProfile(user);
+        }
       } finally {
         setLoading(false);
       }
     };
     
     fetchProfile();
-    
-    // Set up a realtime subscription to profile changes
-    if (user) {
-      const channel = supabase
-        .channel('profile-changes')
-        .on('postgres_changes', 
-          { event: 'UPDATE', schema: 'public', table: 'profiles', filter: `id=eq.${user.id}` }, 
-          (payload) => {
-            setProfile(payload.new as Profile);
-          }
-        )
-        .subscribe();
-        
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }
   }, [user, isDemoMode]);
   
-  const updateProfile = async (updates: Partial<Profile>) => {
+  const updateProfile = async (updates: ProfileUpdateData) => {
     if (isDemoMode) {
       // In demo mode, we just update the local state
       setProfile(prev => {
@@ -137,27 +86,20 @@ export function useProfile() {
     if (!user) return;
     
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update(updates)
-        .eq('id', user.id);
-        
-      if (error) {
-        toast({
-          title: "Update failed",
-          description: error.message,
-          variant: "destructive",
-        });
-        throw error;
-      }
+      const { profile: updatedProfile } = await profileService.updateProfile(updates);
+      setProfile(updatedProfile);
       
-      // No need to update local state as the realtime subscription will handle it
       toast({
         title: "Profile updated",
         description: "Your profile has been updated successfully.",
       });
-    } catch (error) {
-      console.error('Error updating profile:', error);
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Failed to update profile';
+      toast({
+        title: "Update failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
       throw error;
     }
   };
